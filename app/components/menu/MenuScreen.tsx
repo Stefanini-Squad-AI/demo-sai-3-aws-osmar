@@ -6,8 +6,7 @@ import {
   Typography,
   TextField,
   Button,
-  List,
-  ListItem,
+  Grid,
   ListItemButton,
   ListItemText,
   ListItemIcon,
@@ -131,9 +130,9 @@ export function MenuScreen({
 
           {/* Options List */}
           <Box sx={{ p: 3 }}>
-            <List sx={{ mb: 3 }}>
+            <Grid container spacing={2} sx={{ mb: 3 }}>
               {menuData.options.map((option, index) => (
-                <ListItem key={option.id} disablePadding sx={{ mb: 1 }}>
+                <Grid item xs={12} sm={6} key={option.id}>
                   <ListItemButton
                     onClick={() => handleOptionClick(option)}
                     disabled={option.disabled || loading}
@@ -145,6 +144,7 @@ export function MenuScreen({
                       px: 2,
                       transition: 'all 0.2s ease-in-out',
                       border: `1px solid ${theme.palette.divider}`,
+                      height: '100%',
                       '&:hover': {
                         transform: 'translateX(8px)',
                         boxShadow: theme.shadows[4],
@@ -201,9 +201,9 @@ export function MenuScreen({
                       }}
                     />
                   </ListItemButton>
-                </ListItem>
+                </Grid>
               ))}
-            </List>
+            </Grid>
 
             <Divider sx={{ my: 3 }} />
 
