@@ -188,16 +188,8 @@ export default function LoginPage() {
   }
 
   return (
-    <Container 
-      maxWidth="md" 
-      sx={{ 
-        py: { xs: 2, md: 3 },
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-      }}
-    >
-      <Box onKeyDown={handleKeyDown} tabIndex={-1} sx={{ width: '100%' }}>
+    <Container maxWidth="md" sx={{ py: 4 }}>
+      <Box onKeyDown={handleKeyDown} tabIndex={-1}>
         {/* ✅ MODIFICADO: SystemHeader con botón de documentación */}
         <Box sx={{ position: 'relative' }}>
           <SystemHeader
@@ -246,12 +238,11 @@ export default function LoginPage() {
             borderRadius: 3,
             overflow: 'hidden',
             background: `linear-gradient(145deg, ${alpha(theme.palette.background.paper, 0.9)}, ${alpha(theme.palette.background.default, 0.1)})`,
-            maxWidth: '100%',
           }}
         >
           <Box
             sx={{
-              p: { xs: 3, md: 4 },
+              p: 4,
               textAlign: 'center',
               background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
               color: 'white',
@@ -273,11 +264,11 @@ export default function LoginPage() {
                 border: '2px solid rgba(255,255,255,0.3)',
                 borderRadius: 2,
                 fontFamily: 'monospace',
-                fontSize: { xs: '0.65rem', sm: '0.75rem' },
+                fontSize: '0.75rem',
                 lineHeight: 1.2,
                 whiteSpace: 'pre',
                 textAlign: 'center',
-                overflow: 'hidden',
+                overflow: 'auto',
                 backgroundColor: 'rgba(0,0,0,0.1)',
                 display: 'flex',
                 justifyContent: 'center',
@@ -297,7 +288,7 @@ export default function LoginPage() {
           </Box>
 
           {/* Resto del componente sin cambios... */}
-          <Box sx={{ p: { xs: 3, md: 4 } }}>
+          <Box sx={{ p: 4 }}>
             <Typography
               variant="h6"
               color="primary.main"
