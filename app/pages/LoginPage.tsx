@@ -196,106 +196,125 @@ export default function LoginPage() {
   }
 
   return (
-    <Container 
-      maxWidth="md" 
-      sx={{ 
+    <Box
+      onKeyDown={handleKeyDown}
+      tabIndex={-1}
+      sx={{
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
-        py: { xs: 0.5, sm: 1, md: 1.5 },
+        background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.05)}, ${alpha(theme.palette.secondary.main, 0.05)})`,
       }}
     >
-      <Box onKeyDown={handleKeyDown} tabIndex={-1}>
-        {/* SystemHeader solo visible en desktop */}
-        <Box sx={{ display: { xs: 'none', md: 'block' }, position: 'relative' }}>
-          <SystemHeader
-            transactionId="CC00"
-            programName="COSGN00C"
-            title="CardDemo - Card Demo Application"
-            subtitle="Mainframe Modernization"
-            showNavigation={false}
-          />
-          
-          <Box
-            sx={{
-              position: 'absolute',
-              top: 8,
-              right: 8,
-              zIndex: 10,
-            }}
-          >
-            <Tooltip title="View documentation" arrow>
-              <IconButton
-                onClick={handleOpenDocs}
-                size="small"
-                sx={{
-                  color: 'text.secondary',
-                  backgroundColor: alpha(theme.palette.background.paper, 0.8),
-                  backdropFilter: 'blur(4px)',
-                  border: `1px solid ${alpha(theme.palette.divider, 0.3)}`,
-                  '&:hover': {
-                    backgroundColor: alpha(theme.palette.primary.main, 0.1),
-                    color: 'primary.main',
-                    borderColor: 'primary.main',
-                  },
-                  transition: 'all 0.2s ease-in-out',
-                }}
-              >
-                <MenuBook fontSize="small" />
-              </IconButton>
-            </Tooltip>
-          </Box>
-        </Box>
+      {/* SystemHeader - Full width on desktop, hidden on mobile */}
+      <Box sx={{ display: { xs: 'none', md: 'block' }, position: 'relative' }}>
+        <SystemHeader
+          transactionId="CC00"
+          programName="COSGN00C"
+          title="CardDemo - Card Demo Application"
+          subtitle="Mainframe Modernization"
+          showNavigation={false}
+        />
         
-        {/* Título simplificado para mobile/tablet */}
-        <Box sx={{ display: { xs: 'block', md: 'none' }, mb: 1.5, textAlign: 'center' }}>
-          <Typography variant="h5" color="primary.main" fontWeight={600}>
-            CardDemo Login
-          </Typography>
-        </Box>
-
-        <Paper
-          elevation={3}
+        <Box
           sx={{
-            borderRadius: 3,
-            background: `linear-gradient(145deg, ${alpha(theme.palette.background.paper, 0.9)}, ${alpha(theme.palette.background.default, 0.1)})`,
+            position: 'absolute',
+            top: 8,
+            right: 8,
+            zIndex: 10,
           }}
         >
-          <Box
+          <Tooltip title="View documentation" arrow>
+            <IconButton
+              onClick={handleOpenDocs}
+              size="small"
+              sx={{
+                color: 'text.secondary',
+                backgroundColor: alpha(theme.palette.background.paper, 0.8),
+                backdropFilter: 'blur(4px)',
+                border: `1px solid ${alpha(theme.palette.divider, 0.3)}`,
+                '&:hover': {
+                  backgroundColor: alpha(theme.palette.primary.main, 0.1),
+                  color: 'primary.main',
+                  borderColor: 'primary.main',
+                },
+                transition: 'all 0.2s ease-in-out',
+              }}
+            >
+              <MenuBook fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        </Box>
+      </Box>
+
+      {/* Main Content - Two-column layout on desktop, single column on mobile */}
+      <Container 
+        maxWidth="lg"
+        sx={{ 
+          flex: 1,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          py: { xs: 2, sm: 3, md: 4 },
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column', md: 'row' },
+            gap: { xs: 2, md: 4 },
+            width: '100%',
+            maxWidth: { xs: '100%', sm: 600, md: 1100 },
+          }}
+        >
+          {/* Left Panel - Decorative Bill (Desktop side-by-side, Mobile stacked) */}
+          <Paper
+            elevation={3}
             sx={{
-              p: { xs: 1.5, sm: 2, md: 2.5 },
-              textAlign: 'center',
-              background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+              flex: { xs: '0 0 auto', md: '1 1 50%' },
+              display: 'flex',
+              flexDirection: 'column',
+              borderRadius: 3,
+              overflow: 'hidden',
+              background: `linear-gradient(145deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
               color: 'white',
             }}
           >
-            <CreditCard sx={{ fontSize: { xs: 28, sm: 36, md: 48 }, mb: { xs: 0.5, sm: 0.75, md: 1 } }} />
-            <Typography variant="h4" fontWeight={600} gutterBottom sx={{ fontSize: { xs: '1rem', sm: '1.5rem', md: '2.125rem' }, mb: { xs: 0.25, sm: 0.5, md: 1 } }}>
-              NATIONAL RESERVE NOTE
-            </Typography>
-            <Typography variant="h6" sx={{ opacity: 0.9, fontSize: { xs: '0.75rem', sm: '0.875rem', md: '1.25rem' }, mb: { xs: 0.5, sm: 1 } }}>
-              THE UNITED STATES OF KICSLAND
-            </Typography>
-            
-            {/* ASCII art solo visible en sm+ */}
             <Box
               sx={{
-                display: { xs: 'none', sm: 'block' },
-                mt: { sm: 1, md: 1.5 },
-                p: { sm: 1, md: 1.5 },
-                border: '2px solid rgba(255,255,255,0.3)',
-                borderRadius: 2,
-                fontFamily: 'monospace',
-                fontSize: { sm: '0.55rem', md: '0.65rem' },
-                lineHeight: 1.1,
-                whiteSpace: 'pre',
+                p: { xs: 2, sm: 3, md: 4 },
                 textAlign: 'center',
-                overflow: 'auto',
-                backgroundColor: 'rgba(0,0,0,0.1)',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                height: '100%',
               }}
             >
-              {`+========================================+
+              <CreditCard sx={{ fontSize: { xs: 40, sm: 56, md: 72 }, mb: 2, mx: 'auto' }} />
+              <Typography variant="h4" fontWeight={700} gutterBottom sx={{ fontSize: { xs: '1.25rem', sm: '1.75rem', md: '2.5rem' } }}>
+                NATIONAL RESERVE NOTE
+              </Typography>
+              <Typography variant="h6" sx={{ opacity: 0.95, fontSize: { xs: '0.875rem', sm: '1rem', md: '1.5rem' }, mb: 3 }}>
+                THE UNITED STATES OF KICSLAND
+              </Typography>
+              
+              {/* ASCII art - Always visible but scaled */}
+              <Box
+                sx={{
+                  mt: 2,
+                  p: { xs: 1.5, sm: 2, md: 3 },
+                  border: '2px solid rgba(255,255,255,0.4)',
+                  borderRadius: 2,
+                  fontFamily: 'monospace',
+                  fontSize: { xs: '0.5rem', sm: '0.6rem', md: '0.75rem' },
+                  lineHeight: 1.2,
+                  whiteSpace: 'pre',
+                  textAlign: 'center',
+                  backgroundColor: 'rgba(0,0,0,0.15)',
+                  backdropFilter: 'blur(4px)',
+                }}
+              >
+                {`+========================================+
 |%%%%%%%  NATIONAL RESERVE NOTE  %%%%%%%%|
 |%(1)  THE UNITED STATES OF KICSLAND (1)%|
 |%$$              ___       ********  $$%|
@@ -304,186 +323,237 @@ export default function LoginPage() {
 |%(1)          ---m-m---             (1)%|
 |%%~~~~~~~~~~~ ONE DOLLAR ~~~~~~~~~~~~~%%|
 +========================================+`}
+              </Box>
             </Box>
-          </Box>
+          </Paper>
 
-          <Box sx={{ p: { xs: 1.5, sm: 2, md: 2.5 } }}>
-            <Typography
-              variant="h6"
-              color="primary.main"
-              textAlign="center"
-              gutterBottom
-              sx={{ mb: { xs: 1, sm: 1.5 }, fontSize: { xs: '0.875rem', sm: '1rem', md: '1.25rem' } }}
-            >
-              Enter your User ID and password, then press ENTER:
-            </Typography>
-
-            <Box
-              component="form"
-              onSubmit={handleSubmit}
-              sx={{ maxWidth: 400, mx: 'auto' }}
-            >
-              <Stack spacing={{ xs: 1.5, sm: 2 }}>
-                <TextField
-                  label="User ID"
-                  value={formData.userId}
-                  onChange={handleInputChange('userId')}
-                  error={!!fieldErrors.userId}
-                  helperText={fieldErrors.userId || '(Max 8 characters)'}
-                  disabled={isLoading}
-                  autoFocus
-                  inputProps={{
-                    maxLength: 8,
-                    style: { textTransform: 'uppercase' },
-                  }}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Person color="primary" />
-                      </InputAdornment>
-                    ),
-                  }}
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      borderRadius: 2,
-                    },
-                  }}
-                />
-
-                <TextField
-                  label="Password"
-                  type={showPassword ? 'text' : 'password'}
-                  value={formData.password}
-                  onChange={handleInputChange('password')}
-                  error={!!fieldErrors.password}
-                  helperText={fieldErrors.password || '(Max 8 characters)'}
-                  disabled={isLoading}
-                  autoComplete="current-password"
-                  inputProps={{
-                    maxLength: 8,
-                    style: { textTransform: 'uppercase' },
-                  }}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Lock color="primary" />
-                      </InputAdornment>
-                    ),
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          onClick={() => setShowPassword(!showPassword)}
-                          edge="end"
-                          disabled={isLoading}
-                        >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      borderRadius: 2,
-                    },
-                  }}
-                />
-
-                {(authError || Object.keys(fieldErrors).length > 0) && (
-                  <>
-                    {authError ? (
-                      <Alert
-                        severity="error"
-                        onClose={handleAlertClose}
-                        sx={{ borderRadius: 2 }}
-                      >
-                        {getErrorMessage(authError)}
-                      </Alert>
-                    ) : (
-                      <Alert
-                        severity="error"
-                        sx={{ borderRadius: 2 }}
-                      >
-                        Please correct the errors above.
-                      </Alert>
-                    )}
-                  </>
-                )}
-
-                <Button
-                  type="submit"
-                  variant="contained"
-                  size="large"
-                  disabled={isLoading}
-                  startIcon={<LoginIcon />}
-                  sx={{
-                    py: 1.5,
-                    borderRadius: 2,
-                    fontWeight: 600,
-                    fontSize: '1rem',
-                    background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-                    color: theme.palette.primary.contrastText,
-                    border: 'none',
-                    '&:hover': {
-                      background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.9)}, ${alpha(theme.palette.secondary.main, 0.9)})`,
-                      boxShadow: `0 8px 24px ${alpha(theme.palette.primary.main, 0.3)}`,
-                    },
-                    '&:active': {
-                      background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.8)}, ${alpha(theme.palette.secondary.main, 0.8)})`,
-                    },
-                    '&:disabled': {
-                      background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.5)}, ${alpha(theme.palette.secondary.main, 0.5)})`,
-                      color: alpha(theme.palette.primary.contrastText, 0.7),
-                    },
-                  }}
-                >
-                  {isLoading ? 'Signing in...' : 'ENTER = Sign in'}
-                </Button>
-              </Stack>
-            </Box>
-
-            <Divider sx={{ my: { xs: 1.5, sm: 2 } }} />
-
-            <Box sx={{ textAlign: 'center' }}>
-              <Typography variant="body2" color="text.secondary" gutterBottom>
-                Sample credentials:
-              </Typography>
-              <Stack direction="row" spacing={2} justifyContent="center" flexWrap="wrap">
-                <Typography variant="caption" sx={{ 
-                  bgcolor: 'warning.main', 
-                  color: 'warning.contrastText',
-                  px: 1,
-                  py: 0.5,
-                  borderRadius: 1,
-                }}>
-                  Admin: ADMIN001 / PASSWORD
-                </Typography>
-                <Typography variant="caption" sx={{ 
-                  bgcolor: 'success.main', 
-                  color: 'success.contrastText',
-                  px: 1,
-                  py: 0.5,
-                  borderRadius: 1,
-                }}>
-                  Back-Office: USER001 / PASSWORD
-                </Typography>
-              </Stack>
-            </Box>
-          </Box>
-
-          <Box
+          {/* Right Panel - Login Form */}
+          <Paper
+            elevation={3}
             sx={{
-              p: { xs: 1, sm: 1.25, md: 1.5 },
-              bgcolor: alpha(theme.palette.grey[100], 0.5),
-              borderTop: `1px solid ${theme.palette.divider}`,
-              textAlign: 'center',
+              flex: { xs: '0 0 auto', md: '1 1 50%' },
+              display: 'flex',
+              flexDirection: 'column',
+              borderRadius: 3,
+              overflow: 'hidden',
+              background: alpha(theme.palette.background.paper, 0.95),
             }}
           >
-            <Typography variant="body2" color="text.secondary">
-              ENTER = Sign in • F3 = Exit
-            </Typography>
-          </Box>
-        </Paper>
-      </Box>
-    </Container>
+            {/* Mobile header */}
+            <Box 
+              sx={{ 
+                display: { xs: 'block', md: 'none' },
+                p: 2,
+                background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+                color: 'white',
+                textAlign: 'center',
+              }}
+            >
+              <Typography variant="h5" fontWeight={600}>
+                CardDemo Login
+              </Typography>
+            </Box>
+
+            <Box sx={{ p: { xs: 2, sm: 3, md: 4 }, flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <Typography
+                variant="h5"
+                color="primary.main"
+                textAlign="center"
+                gutterBottom
+                sx={{ 
+                  mb: 3,
+                  fontSize: { xs: '1.125rem', sm: '1.25rem', md: '1.5rem' },
+                  fontWeight: 600,
+                }}
+              >
+                Sign In
+              </Typography>
+
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                textAlign="center"
+                sx={{ mb: 3 }}
+              >
+                Enter your User ID and password, then press ENTER
+              </Typography>
+
+              <Box
+                component="form"
+                onSubmit={handleSubmit}
+                sx={{ width: '100%' }}
+              >
+                <Stack spacing={2.5}>
+                  <TextField
+                    label="User ID"
+                    value={formData.userId}
+                    onChange={handleInputChange('userId')}
+                    error={!!fieldErrors.userId}
+                    helperText={fieldErrors.userId || '(Max 8 characters)'}
+                    disabled={isLoading}
+                    autoFocus
+                    fullWidth
+                    inputProps={{
+                      maxLength: 8,
+                      style: { textTransform: 'uppercase' },
+                    }}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Person color="primary" />
+                        </InputAdornment>
+                      ),
+                    }}
+                    sx={{
+                      '& .MuiOutlinedInput-root': {
+                        borderRadius: 2,
+                      },
+                    }}
+                  />
+
+                  <TextField
+                    label="Password"
+                    type={showPassword ? 'text' : 'password'}
+                    value={formData.password}
+                    onChange={handleInputChange('password')}
+                    error={!!fieldErrors.password}
+                    helperText={fieldErrors.password || '(Max 8 characters)'}
+                    disabled={isLoading}
+                    autoComplete="current-password"
+                    fullWidth
+                    inputProps={{
+                      maxLength: 8,
+                      style: { textTransform: 'uppercase' },
+                    }}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Lock color="primary" />
+                        </InputAdornment>
+                      ),
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            onClick={() => setShowPassword(!showPassword)}
+                            edge="end"
+                            disabled={isLoading}
+                          >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                    sx={{
+                      '& .MuiOutlinedInput-root': {
+                        borderRadius: 2,
+                      },
+                    }}
+                  />
+
+                  {(authError || Object.keys(fieldErrors).length > 0) && (
+                    <>
+                      {authError ? (
+                        <Alert
+                          severity="error"
+                          onClose={handleAlertClose}
+                          sx={{ borderRadius: 2 }}
+                        >
+                          {getErrorMessage(authError)}
+                        </Alert>
+                      ) : (
+                        <Alert
+                          severity="error"
+                          sx={{ borderRadius: 2 }}
+                        >
+                          Please correct the errors above.
+                        </Alert>
+                      )}
+                    </>
+                  )}
+
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    size="large"
+                    disabled={isLoading}
+                    startIcon={<LoginIcon />}
+                    fullWidth
+                    sx={{
+                      py: 1.75,
+                      borderRadius: 2,
+                      fontWeight: 600,
+                      fontSize: '1.125rem',
+                      background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+                      color: theme.palette.primary.contrastText,
+                      border: 'none',
+                      '&:hover': {
+                        background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.9)}, ${alpha(theme.palette.secondary.main, 0.9)})`,
+                        boxShadow: `0 8px 24px ${alpha(theme.palette.primary.main, 0.3)}`,
+                      },
+                      '&:active': {
+                        background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.8)}, ${alpha(theme.palette.secondary.main, 0.8)})`,
+                      },
+                      '&:disabled': {
+                        background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.5)}, ${alpha(theme.palette.secondary.main, 0.5)})`,
+                        color: alpha(theme.palette.primary.contrastText, 0.7),
+                      },
+                    }}
+                  >
+                    {isLoading ? 'Signing in...' : 'ENTER = Sign in'}
+                  </Button>
+                </Stack>
+              </Box>
+
+              <Divider sx={{ my: 3 }} />
+
+              <Box sx={{ textAlign: 'center' }}>
+                <Typography variant="body2" color="text.secondary" gutterBottom sx={{ mb: 1.5 }}>
+                  Sample credentials:
+                </Typography>
+                <Stack spacing={1.5}>
+                  <Box sx={{ 
+                    bgcolor: alpha(theme.palette.warning.main, 0.1),
+                    border: `1px solid ${theme.palette.warning.main}`,
+                    color: 'warning.dark',
+                    px: 2,
+                    py: 1,
+                    borderRadius: 2,
+                  }}>
+                    <Typography variant="body2" fontWeight={600}>
+                      Admin: ADMIN001 / PASSWORD
+                    </Typography>
+                  </Box>
+                  <Box sx={{ 
+                    bgcolor: alpha(theme.palette.success.main, 0.1),
+                    border: `1px solid ${theme.palette.success.main}`,
+                    color: 'success.dark',
+                    px: 2,
+                    py: 1,
+                    borderRadius: 2,
+                  }}>
+                    <Typography variant="body2" fontWeight={600}>
+                      Back-Office: USER001 / PASSWORD
+                    </Typography>
+                  </Box>
+                </Stack>
+              </Box>
+            </Box>
+
+            <Box
+              sx={{
+                p: 1.5,
+                bgcolor: alpha(theme.palette.grey[100], 0.7),
+                borderTop: `1px solid ${theme.palette.divider}`,
+                textAlign: 'center',
+              }}
+            >
+              <Typography variant="body2" color="text.secondary" fontWeight={500}>
+                ENTER = Sign in • F3 = Exit
+              </Typography>
+            </Box>
+          </Paper>
+        </Box>
+      </Container>
+    </Box>
   );
 }
