@@ -201,50 +201,43 @@ export default function LoginPage() {
       tabIndex={-1}
       sx={{
         minHeight: '100vh',
+        height: '100vh',
         display: 'flex',
         flexDirection: 'column',
         background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.05)}, ${alpha(theme.palette.secondary.main, 0.05)})`,
+        overflow: 'hidden',
+        position: 'relative',
       }}
     >
-      {/* SystemHeader - Full width on desktop, hidden on mobile */}
-      <Box sx={{ display: { xs: 'none', md: 'block' }, position: 'relative' }}>
-        <SystemHeader
-          transactionId="CC00"
-          programName="COSGN00C"
-          title="CardDemo - Card Demo Application"
-          subtitle="Mainframe Modernization"
-          showNavigation={false}
-        />
-        
-        <Box
-          sx={{
-            position: 'absolute',
-            top: 8,
-            right: 8,
-            zIndex: 10,
-          }}
-        >
-          <Tooltip title="View documentation" arrow>
-            <IconButton
-              onClick={handleOpenDocs}
-              size="small"
-              sx={{
-                color: 'text.secondary',
-                backgroundColor: alpha(theme.palette.background.paper, 0.8),
-                backdropFilter: 'blur(4px)',
-                border: `1px solid ${alpha(theme.palette.divider, 0.3)}`,
-                '&:hover': {
-                  backgroundColor: alpha(theme.palette.primary.main, 0.1),
-                  color: 'primary.main',
-                  borderColor: 'primary.main',
-                },
-                transition: 'all 0.2s ease-in-out',
-              }}
-            >
-              <MenuBook fontSize="small" />
-            </IconButton>
-          </Tooltip>
-        </Box>
+      {/* Documentation button - Positioned absolutely */}
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 16,
+          right: 16,
+          zIndex: 10,
+        }}
+      >
+        <Tooltip title="View documentation" arrow>
+          <IconButton
+            onClick={handleOpenDocs}
+            size="small"
+            sx={{
+              color: 'text.secondary',
+              backgroundColor: alpha(theme.palette.background.paper, 0.8),
+              backdropFilter: 'blur(4px)',
+              border: `1px solid ${alpha(theme.palette.divider, 0.3)}`,
+              '&:hover': {
+                backgroundColor: alpha(theme.palette.primary.main, 0.1),
+                color: 'primary.main',
+                borderColor: 'primary.main',
+              },
+              transition: 'all 0.2s ease-in-out',
+            }}
+          >
+            <MenuBook fontSize="small" />
+          </IconButton>
+        </Tooltip>
       </Box>
 
       {/* Main Content - Two-column layout on desktop, single column on mobile */}
@@ -255,16 +248,19 @@ export default function LoginPage() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          py: { xs: 2, sm: 3, md: 4 },
+          py: { xs: 2, sm: 2, md: 3 },
+          height: '100%',
         }}
       >
         <Box
           sx={{
             display: 'flex',
             flexDirection: { xs: 'column', md: 'row' },
-            gap: { xs: 2, md: 4 },
+            gap: { xs: 2, md: 3 },
             width: '100%',
             maxWidth: { xs: '100%', sm: 600, md: 1100 },
+            height: { xs: 'auto', md: '85vh' },
+            maxHeight: { xs: 'none', md: '750px' },
           }}
         >
           {/* Left Panel - Decorative Bill (Desktop side-by-side, Mobile stacked) */}
@@ -278,11 +274,12 @@ export default function LoginPage() {
               overflow: 'hidden',
               background: `linear-gradient(145deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
               color: 'white',
+              minHeight: { xs: '280px', md: 'auto' },
             }}
           >
             <Box
               sx={{
-                p: { xs: 2, sm: 3, md: 4 },
+                p: { xs: 2, sm: 2.5, md: 3 },
                 textAlign: 'center',
                 display: 'flex',
                 flexDirection: 'column',
@@ -290,23 +287,23 @@ export default function LoginPage() {
                 height: '100%',
               }}
             >
-              <CreditCard sx={{ fontSize: { xs: 40, sm: 56, md: 72 }, mb: 2, mx: 'auto' }} />
-              <Typography variant="h4" fontWeight={700} gutterBottom sx={{ fontSize: { xs: '1.25rem', sm: '1.75rem', md: '2.5rem' } }}>
+              <CreditCard sx={{ fontSize: { xs: 36, sm: 48, md: 60 }, mb: { xs: 1.5, md: 2 }, mx: 'auto' }} />
+              <Typography variant="h4" fontWeight={700} gutterBottom sx={{ fontSize: { xs: '1.25rem', sm: '1.5rem', md: '2rem' }, mb: { xs: 1, md: 2 } }}>
                 NATIONAL RESERVE NOTE
               </Typography>
-              <Typography variant="h6" sx={{ opacity: 0.95, fontSize: { xs: '0.875rem', sm: '1rem', md: '1.5rem' }, mb: 3 }}>
+              <Typography variant="h6" sx={{ opacity: 0.95, fontSize: { xs: '0.875rem', sm: '1rem', md: '1.25rem' }, mb: { xs: 1.5, md: 2 } }}>
                 THE UNITED STATES OF KICSLAND
               </Typography>
               
               {/* ASCII art - Always visible but scaled */}
               <Box
                 sx={{
-                  mt: 2,
-                  p: { xs: 1.5, sm: 2, md: 3 },
+                  mt: { xs: 1, md: 1.5 },
+                  p: { xs: 1, sm: 1.5, md: 2 },
                   border: '2px solid rgba(255,255,255,0.4)',
                   borderRadius: 2,
                   fontFamily: 'monospace',
-                  fontSize: { xs: '0.5rem', sm: '0.6rem', md: '0.75rem' },
+                  fontSize: { xs: '0.45rem', sm: '0.55rem', md: '0.7rem' },
                   lineHeight: 1.2,
                   whiteSpace: 'pre',
                   textAlign: 'center',
@@ -339,29 +336,14 @@ export default function LoginPage() {
               background: alpha(theme.palette.background.paper, 0.95),
             }}
           >
-            {/* Mobile header */}
-            <Box 
-              sx={{ 
-                display: { xs: 'block', md: 'none' },
-                p: 2,
-                background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-                color: 'white',
-                textAlign: 'center',
-              }}
-            >
-              <Typography variant="h5" fontWeight={600}>
-                CardDemo Login
-              </Typography>
-            </Box>
-
-            <Box sx={{ p: { xs: 2, sm: 3, md: 4 }, flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <Box sx={{ p: { xs: 2, sm: 2, md: 2.5 }, flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               <Typography
                 variant="h5"
                 color="primary.main"
                 textAlign="center"
                 gutterBottom
                 sx={{ 
-                  mb: 3,
+                  mb: { xs: 1.5, md: 2 },
                   fontSize: { xs: '1.125rem', sm: '1.25rem', md: '1.5rem' },
                   fontWeight: 600,
                 }}
@@ -373,7 +355,7 @@ export default function LoginPage() {
                 variant="body2"
                 color="text.secondary"
                 textAlign="center"
-                sx={{ mb: 3 }}
+                sx={{ mb: { xs: 1.5, md: 2 } }}
               >
                 Enter your User ID and password, then press ENTER
               </Typography>
@@ -383,7 +365,7 @@ export default function LoginPage() {
                 onSubmit={handleSubmit}
                 sx={{ width: '100%' }}
               >
-                <Stack spacing={2.5}>
+                <Stack spacing={1.5}>
                   <TextField
                     label="User ID"
                     value={formData.userId}
@@ -479,10 +461,10 @@ export default function LoginPage() {
                     startIcon={<LoginIcon />}
                     fullWidth
                     sx={{
-                      py: 1.75,
+                      py: { xs: 1, md: 1.25 },
                       borderRadius: 2,
                       fontWeight: 600,
-                      fontSize: '1.125rem',
+                      fontSize: { xs: '0.95rem', md: '1.05rem' },
                       background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
                       color: theme.palette.primary.contrastText,
                       border: 'none',
@@ -504,22 +486,22 @@ export default function LoginPage() {
                 </Stack>
               </Box>
 
-              <Divider sx={{ my: 3 }} />
+              <Divider sx={{ my: { xs: 1.5, md: 2 } }} />
 
               <Box sx={{ textAlign: 'center' }}>
-                <Typography variant="body2" color="text.secondary" gutterBottom sx={{ mb: 1.5 }}>
+                <Typography variant="body2" color="text.secondary" gutterBottom sx={{ mb: 0.75 }}>
                   Sample credentials:
                 </Typography>
-                <Stack spacing={1.5}>
+                <Stack spacing={0.75}>
                   <Box sx={{ 
                     bgcolor: alpha(theme.palette.warning.main, 0.1),
                     border: `1px solid ${theme.palette.warning.main}`,
                     color: 'warning.dark',
-                    px: 2,
-                    py: 1,
+                    px: 1.5,
+                    py: 0.6,
                     borderRadius: 2,
                   }}>
-                    <Typography variant="body2" fontWeight={600}>
+                    <Typography variant="body2" fontWeight={600} sx={{ fontSize: { xs: '0.7rem', md: '0.8rem' } }}>
                       Admin: ADMIN001 / PASSWORD
                     </Typography>
                   </Box>
@@ -527,11 +509,11 @@ export default function LoginPage() {
                     bgcolor: alpha(theme.palette.success.main, 0.1),
                     border: `1px solid ${theme.palette.success.main}`,
                     color: 'success.dark',
-                    px: 2,
-                    py: 1,
+                    px: 1.5,
+                    py: 0.6,
                     borderRadius: 2,
                   }}>
-                    <Typography variant="body2" fontWeight={600}>
+                    <Typography variant="body2" fontWeight={600} sx={{ fontSize: { xs: '0.7rem', md: '0.8rem' } }}>
                       Back-Office: USER001 / PASSWORD
                     </Typography>
                   </Box>
@@ -541,13 +523,13 @@ export default function LoginPage() {
 
             <Box
               sx={{
-                p: 1.5,
+                p: 1,
                 bgcolor: alpha(theme.palette.grey[100], 0.7),
                 borderTop: `1px solid ${theme.palette.divider}`,
                 textAlign: 'center',
               }}
             >
-              <Typography variant="body2" color="text.secondary" fontWeight={500}>
+              <Typography variant="body2" color="text.secondary" fontWeight={500} sx={{ fontSize: { xs: '0.7rem', md: '0.8rem' } }}>
                 ENTER = Sign in • F3 = Exit
               </Typography>
             </Box>
