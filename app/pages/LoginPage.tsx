@@ -203,12 +203,12 @@ export default function LoginPage() {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        py: { xs: 1, sm: 2 },
+        py: { xs: 0.5, sm: 1, md: 1.5 },
       }}
     >
       <Box onKeyDown={handleKeyDown} tabIndex={-1}>
-        {/* ✅ MODIFICADO: SystemHeader con botón de documentación */}
-        <Box sx={{ position: 'relative' }}>
+        {/* SystemHeader solo visible en desktop */}
+        <Box sx={{ display: { xs: 'none', md: 'block' }, position: 'relative' }}>
           <SystemHeader
             transactionId="CC00"
             programName="COSGN00C"
@@ -217,7 +217,6 @@ export default function LoginPage() {
             showNavigation={false}
           />
           
-          {/* ✅ NUEVO: Botón de documentación discreto en el header */}
           <Box
             sx={{
               position: 'absolute',
@@ -248,6 +247,13 @@ export default function LoginPage() {
             </Tooltip>
           </Box>
         </Box>
+        
+        {/* Título simplificado para mobile/tablet */}
+        <Box sx={{ display: { xs: 'block', md: 'none' }, mb: 1.5, textAlign: 'center' }}>
+          <Typography variant="h5" color="primary.main" fontWeight={600}>
+            CardDemo Login
+          </Typography>
+        </Box>
 
         <Paper
           elevation={3}
@@ -258,37 +264,35 @@ export default function LoginPage() {
         >
           <Box
             sx={{
-              p: { xs: 1.5, sm: 2, md: 3 },
+              p: { xs: 1.5, sm: 2, md: 2.5 },
               textAlign: 'center',
               background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
               color: 'white',
             }}
           >
-            <CreditCard sx={{ fontSize: { xs: 32, sm: 40, md: 48 }, mb: { xs: 0.5, sm: 1 } }} />
-            <Typography variant="h4" fontWeight={600} gutterBottom sx={{ fontSize: { xs: '1.25rem', sm: '1.75rem', md: '2.125rem' }, mb: { xs: 0.5, sm: 1 } }}>
+            <CreditCard sx={{ fontSize: { xs: 28, sm: 36, md: 48 }, mb: { xs: 0.5, sm: 0.75, md: 1 } }} />
+            <Typography variant="h4" fontWeight={600} gutterBottom sx={{ fontSize: { xs: '1rem', sm: '1.5rem', md: '2.125rem' }, mb: { xs: 0.25, sm: 0.5, md: 1 } }}>
               NATIONAL RESERVE NOTE
             </Typography>
-            <Typography variant="h6" sx={{ opacity: 0.9, fontSize: { xs: '0.875rem', sm: '1rem', md: '1.25rem' } }}>
+            <Typography variant="h6" sx={{ opacity: 0.9, fontSize: { xs: '0.75rem', sm: '0.875rem', md: '1.25rem' }, mb: { xs: 0.5, sm: 1 } }}>
               THE UNITED STATES OF KICSLAND
             </Typography>
             
-            {/* ✅ CORRECCIÓN PRINCIPAL: Billete ASCII con espacios preservados */}
+            {/* ASCII art solo visible en sm+ */}
             <Box
               sx={{
-                mt: { xs: 0.5, sm: 1, md: 2 },
-                p: { xs: 0.5, sm: 1, md: 2 },
+                display: { xs: 'none', sm: 'block' },
+                mt: { sm: 1, md: 1.5 },
+                p: { sm: 1, md: 1.5 },
                 border: '2px solid rgba(255,255,255,0.3)',
                 borderRadius: 2,
                 fontFamily: 'monospace',
-                fontSize: { xs: '0.5rem', sm: '0.65rem', md: '0.75rem' },
-                lineHeight: 1.2,
+                fontSize: { sm: '0.55rem', md: '0.65rem' },
+                lineHeight: 1.1,
                 whiteSpace: 'pre',
                 textAlign: 'center',
                 overflow: 'auto',
                 backgroundColor: 'rgba(0,0,0,0.1)',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
               }}
             >
               {`+========================================+
@@ -303,8 +307,7 @@ export default function LoginPage() {
             </Box>
           </Box>
 
-          {/* Resto del componente sin cambios... */}
-          <Box sx={{ p: { xs: 1.5, sm: 2, md: 3 } }}>
+          <Box sx={{ p: { xs: 1.5, sm: 2, md: 2.5 } }}>
             <Typography
               variant="h6"
               color="primary.main"
@@ -469,7 +472,7 @@ export default function LoginPage() {
 
           <Box
             sx={{
-              p: { xs: 1, sm: 1.5, md: 2 },
+              p: { xs: 1, sm: 1.25, md: 1.5 },
               bgcolor: alpha(theme.palette.grey[100], 0.5),
               borderTop: `1px solid ${theme.palette.divider}`,
               textAlign: 'center',

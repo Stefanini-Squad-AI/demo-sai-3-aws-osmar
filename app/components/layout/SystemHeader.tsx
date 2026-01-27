@@ -64,7 +64,7 @@ export function SystemHeader({
       elevation={1}
       sx={{
         p: 2,
-        mb: 3,
+        mb: { xs: 2, md: 2.5 },
         background: `linear-gradient(135deg, ${theme.palette.primary.main}15, ${theme.palette.secondary.main}10)`,
         border: `1px solid ${theme.palette.divider}`,
       }}
