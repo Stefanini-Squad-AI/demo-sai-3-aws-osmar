@@ -132,7 +132,7 @@ export function MenuScreen({
           <Box sx={{ p: 3 }}>
             <Grid container spacing={2} sx={{ mb: 3 }}>
               {menuData.options.map((option, index) => (
-                <Grid item xs={12} sm={6} key={option.id}>
+                <Grid item xs={12} md={6} key={option.id}>
                   <ListItemButton
                     onClick={() => handleOptionClick(option)}
                     disabled={option.disabled || loading}
