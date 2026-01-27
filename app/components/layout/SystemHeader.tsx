@@ -65,7 +65,7 @@ export function SystemHeader({
       sx={{
         p: 2,
         mb: 3,
-        background: `linear-gradient(135deg, ${theme.palette.primary.main}15, ${theme.palette.secondary.main}10)`,
+        background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
         border: `1px solid ${theme.palette.divider}`,
       }}
     >
@@ -76,7 +76,7 @@ export function SystemHeader({
               variant="h4"
               component="h1"
               fontWeight={700}
-              color="primary.main"
+              color="white"
               gutterBottom
             >
               {title}
@@ -84,8 +84,8 @@ export function SystemHeader({
             {subtitle && (
               <Typography
                 variant="h6"
-                color="text.secondary"
-                sx={{ fontWeight: 500 }}
+                color="white"
+                sx={{ fontWeight: 500, opacity: 0.9 }}
               >
                 {subtitle}
               </Typography>
