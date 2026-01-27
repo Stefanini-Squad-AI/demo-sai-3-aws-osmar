@@ -199,11 +199,11 @@ export default function LoginPage() {
     <Container 
       maxWidth="md" 
       sx={{ 
-        height: '100vh',
+        minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        overflow: 'hidden',
+        py: { xs: 1, sm: 2 },
       }}
     >
       <Box onKeyDown={handleKeyDown} tabIndex={-1}>
@@ -253,36 +253,34 @@ export default function LoginPage() {
           elevation={3}
           sx={{
             borderRadius: 3,
-            overflow: 'auto',
-            maxHeight: '100%',
             background: `linear-gradient(145deg, ${alpha(theme.palette.background.paper, 0.9)}, ${alpha(theme.palette.background.default, 0.1)})`,
           }}
         >
           <Box
             sx={{
-              p: { xs: 2, sm: 3 },
+              p: { xs: 1.5, sm: 2, md: 3 },
               textAlign: 'center',
               background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
               color: 'white',
             }}
           >
-            <CreditCard sx={{ fontSize: { xs: 36, sm: 48 }, mb: { xs: 1, sm: 2 } }} />
-            <Typography variant="h4" fontWeight={600} gutterBottom sx={{ fontSize: { xs: '1.5rem', sm: '2.125rem' } }}>
+            <CreditCard sx={{ fontSize: { xs: 32, sm: 40, md: 48 }, mb: { xs: 0.5, sm: 1 } }} />
+            <Typography variant="h4" fontWeight={600} gutterBottom sx={{ fontSize: { xs: '1.25rem', sm: '1.75rem', md: '2.125rem' }, mb: { xs: 0.5, sm: 1 } }}>
               NATIONAL RESERVE NOTE
             </Typography>
-            <Typography variant="h6" sx={{ opacity: 0.9, fontSize: { xs: '0.95rem', sm: '1.25rem' } }}>
+            <Typography variant="h6" sx={{ opacity: 0.9, fontSize: { xs: '0.875rem', sm: '1rem', md: '1.25rem' } }}>
               THE UNITED STATES OF KICSLAND
             </Typography>
             
             {/* ✅ CORRECCIÓN PRINCIPAL: Billete ASCII con espacios preservados */}
             <Box
               sx={{
-                mt: { xs: 1, sm: 2 },
-                p: { xs: 1, sm: 2 },
+                mt: { xs: 0.5, sm: 1, md: 2 },
+                p: { xs: 0.5, sm: 1, md: 2 },
                 border: '2px solid rgba(255,255,255,0.3)',
                 borderRadius: 2,
                 fontFamily: 'monospace',
-                fontSize: { xs: '0.6rem', sm: '0.75rem' },
+                fontSize: { xs: '0.5rem', sm: '0.65rem', md: '0.75rem' },
                 lineHeight: 1.2,
                 whiteSpace: 'pre',
                 textAlign: 'center',
@@ -306,13 +304,13 @@ export default function LoginPage() {
           </Box>
 
           {/* Resto del componente sin cambios... */}
-          <Box sx={{ p: { xs: 2, sm: 3 } }}>
+          <Box sx={{ p: { xs: 1.5, sm: 2, md: 3 } }}>
             <Typography
               variant="h6"
               color="primary.main"
               textAlign="center"
               gutterBottom
-              sx={{ mb: 2, fontSize: { xs: '1rem', sm: '1.25rem' } }}
+              sx={{ mb: { xs: 1, sm: 1.5 }, fontSize: { xs: '0.875rem', sm: '1rem', md: '1.25rem' } }}
             >
               Enter your User ID and password, then press ENTER:
             </Typography>
@@ -322,7 +320,7 @@ export default function LoginPage() {
               onSubmit={handleSubmit}
               sx={{ maxWidth: 400, mx: 'auto' }}
             >
-              <Stack spacing={2}>
+              <Stack spacing={{ xs: 1.5, sm: 2 }}>
                 <TextField
                   label="User ID"
                   value={formData.userId}
@@ -440,7 +438,7 @@ export default function LoginPage() {
               </Stack>
             </Box>
 
-            <Divider sx={{ my: 2 }} />
+            <Divider sx={{ my: { xs: 1.5, sm: 2 } }} />
 
             <Box sx={{ textAlign: 'center' }}>
               <Typography variant="body2" color="text.secondary" gutterBottom>
@@ -471,7 +469,7 @@ export default function LoginPage() {
 
           <Box
             sx={{
-              p: { xs: 1.5, sm: 2 },
+              p: { xs: 1, sm: 1.5, md: 2 },
               bgcolor: alpha(theme.palette.grey[100], 0.5),
               borderTop: `1px solid ${theme.palette.divider}`,
               textAlign: 'center',
