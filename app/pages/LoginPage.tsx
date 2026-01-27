@@ -199,11 +199,11 @@ export default function LoginPage() {
     <Container 
       maxWidth="md" 
       sx={{ 
-        minHeight: '100vh',
+        height: '100vh',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        py: { xs: 2, sm: 3 },
+        overflow: 'hidden',
       }}
     >
       <Box onKeyDown={handleKeyDown} tabIndex={-1}>
@@ -253,7 +253,8 @@ export default function LoginPage() {
           elevation={3}
           sx={{
             borderRadius: 3,
-            overflow: 'hidden',
+            overflow: 'auto',
+            maxHeight: '100%',
             background: `linear-gradient(145deg, ${alpha(theme.palette.background.paper, 0.9)}, ${alpha(theme.palette.background.default, 0.1)})`,
           }}
         >
