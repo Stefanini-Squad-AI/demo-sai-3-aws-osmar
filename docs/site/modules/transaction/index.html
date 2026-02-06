@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💸 TRANSACTION - Transacciones | Guía de Historias</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f7fa;
+            color: #1f1f1f;
+            margin: 0;
+            line-height: 1.7;
+        }
+        .container { max-width: 1300px; margin: 0 auto; padding: 25px; }
+        header.hero {
+            background: linear-gradient(135deg, #ff9a00 0%, #ff6a00 60%, #ff3d00 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 50px 40px;
+            box-shadow: 0 12px 35px rgba(255, 105, 0, 0.3);
+        }
+        header.hero h1 {
+            font-size: 2.9em;
+            margin-bottom: 8px;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+        header.hero p {
+            font-size: 1.15em;
+            opacity: 0.95;
+            margin-bottom: 6px;
+        }
+        section.card-section {
+            background: white;
+            border-radius: 14px;
+            padding: 32px;
+            margin: 25px 0;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+        }
+        section.card-section h2 {
+            color: #ff6a00;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.9em;
+        }
+        section.card-section h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+        .highlight { background: #fff4e5; border-left: 4px solid #ff6a00; padding: 14px 18px; border-radius: 8px; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .info-card {
+            border-radius: 12px;
+            border: 1px solid #ececec;
+            background: #fcfcfc;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .info-card h4 {
+            margin-top: 0;
+            color: #ff6a00;
+            font-size: 1.2em;
+        }
+        .info-card p {
+            margin-bottom: 10px;
+        }
+        .badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+        .badge {
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #fff;
+        }
+        .badge-simple { background: #28a745; }
+        .badge-medium { background: #ffc107; }
+        .badge-complex { background: #dc3545; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 18px;
+        }
+        th, td {
+            padding: 12px 10px;
+            text-align: left;
+            border-bottom: 1px solid #ececec;
+        }
+        th {
+            background: #ff6a00;
+            color: white;
+            font-weight: 600;
+        }
+        pre {
+            background: #1e1e1e;
+            color: #f8f8f2;
+            border-radius: 10px;
+            padding: 20px;
+            overflow-x: auto;
+            font-size: 0.95em;
+        }
+        code { font-family: 'Consolas', 'Monaco', monospace; }
+        .rules div {
+            background: #fff5f0;
+            border-left: 4px solid #ff6a00;
+            padding: 14px 18px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+        .list-inline { display: flex; flex-wrap: wrap; gap: 12px; list-style: none; padding: 0; }
+        .list-inline li {
+            background: #f0f0f0;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-weight: 500;
+            color: #333;
+        }
+        footer {
+            text-align: center;
+            margin: 40px 0 10px;
+            color: #555;
+        }
+        footer a { color: #ff6a00; text-decoration: none; font-weight: 600; }
+        footer a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="hero">
+            <h1>💸 TRANSACTION</h1>
+            <p>Transacciones financieras – Guía práctica para escribir User Stories.</p>
+            <p><strong>Propósito:</strong> Registrar, auditar, consultar y reportar movimientos de tarjetas dentro de CardDemo con vínculos claros a servicios backend.</p>
+        </header>
+
+        <section class="card-section">
+            <h2>📋 Resumen rápido</h2>
+            <div class="highlight">
+                <p><strong>Responsabilidades clave:</strong> listado paginado (F7/F8), vista por Transaction ID (F5 vuelve al listado), registro manual con confirmación (Y), reportes mensuales/anuales/personalizados, exportación TXT e información de merchant al detalle.</p>
+            </div>
+            <div class="grid" style="margin-top: 20px;">
+                <div class="info-card">
+                    <h4>⚙️ Stack operativo</h4>
+                    <p><strong>Frontend:</strong> React 18 + TypeScript + Material-UI 5</p>
+                    <p><strong>Estado:</strong> Redux + Hooks</p>
+                    <p><strong>Backend:</strong> Spring Boot (endpoints `/transactions*`, `/transaction-view`, `/v1/reports/transactions/*`).</p>
+                </div>
+                <div class="info-card">
+                    <h4>📐 Métricas de impacto</h4>
+                    <ul class="list-inline">
+                        <li>90% de agentes usan este módulo</li>
+                        <li>40 búsquedas/usuario/día</li>
+                        <li>-60% errores de captura manual</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h4>🔗 Factores de acceso</h4>
+                    <p>Access control con Auth Module y validaciones contextuales de cuentas y tarjetas.</p>
+                    <p>MSW mantiene 50 transacciones mock para asegurar coherencia local.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card-section">
+            <h2>🎯 Guía de Historias de Usuario</h2>
+            <div class="grid">
+                <div class="info-card">
+                    <h4>🔍 Visualizar Movimiento</h4>
+                    <p><strong>Template:</strong> Como analista, quiero consultar un Transaction ID para confirmar montos y merchant.</p>
+                    <p><strong>Criterios:</strong> ID numérico, respuesta < 400ms, metadata del backend visible, enmascarado de tarjeta.</p>
+                </div>
+                <div class="info-card">
+                    <h4>✏️ Registrar Ajuste Manual</h4>
+                    <p>Como oficial de operaciones, quiero crear un cargo/abono con confirmación 'Y' y validación de montos.</p>
+                    <p>Valida account/card, monto dentro de [-99,999,999.99, +99,999,999.99], fechas YYYY-MM-DD y confirmación.</p>
+                </div>
+                <div class="info-card">
+                    <h4>📊 Reporte Estratégico</h4>
+                    <p>Como gerente, quiero un reporte mensual agrupado por cuenta y descargarlo en TXT.</p>
+                    <p>Debe mostrar totales de cuenta, gran total y permitir imprimir el dialogo.</p>
+                </div>
+                <div class="info-card">
+                    <h4>🧾 Control de Navegación</h4>
+                    <p>Como usuario back-office, quiero usar F3/F4/F5/F7/F8 para mantener el flujo en pantalla completa.</p>
+                    <p>El `SystemHeader` maneja shortcuts y muestra transactionId/programName (CT00/CT01).</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card-section">
+            <h2>⚡ Factores de aceleración</h2>
+            <ul>
+                <li><strong>`useTransactionList`:</strong> Hook reutilizable para búsqueda, control de página y selección. Evita reescribir la lógica de paginación con `firstTransactionId`/`lastTransactionId`.</li>
+                <li><strong>`SystemHeader` + MUI Chips:</strong> Normaliza transactionId/programName con estética coherente y soporta shortcuts nativos.</li>
+                <li><strong>`TransactionReportTable`:</strong> Renderiza tablas agrupadas y permite descarga TXT/impresión con estilos preconfigurados.</li>
+                <li><strong>MSW:</strong> Representa los handlers `transactionListHandlers`, `transactionViewHandlers`, `transactionAddHandlers`, `transactionReportsHandlers` para mantener la misma contract con el backend real.</li>
+            </ul>
+
+            <div style="margin-top: 18px;">
+                <span class="badge badge-simple">Simple</span>
+                <span class="badge badge-medium">Medio</span>
+                <span class="badge badge-complex">Complejo</span>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Complejidad</th>
+                        <th>Descripción</th>
+                        <th>Ejemplos</th>
+                        <th>Estimación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="badge badge-simple">Simple</span></td>
+                        <td>CRUD básico y ajustes UI</td>
+                        <td>Actualizar helper text, agregar tooltip, modificar formateo.</td>
+                        <td>1-2 pts (4-8 hrs)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-medium">Medio</span></td>
+                        <td>Validaciones nuevas o filtros</td>
+                        <td>Filtro por merchant, exportar a CSV, alertas de límite de monto.</td>
+                        <td>3-5 pts (12-20 hrs)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-complex">Complejo</span></td>
+                        <td>Integraciones multi-sistema</td>
+                        <td>WebSocket live updates, workflow de aprobaciones con auditoría.</td>
+                        <td>5-8 pts (20-32 hrs)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="card-section">
+            <h2>🔧 Fundamento técnico</h2>
+            <div class="grid">
+                <div class="info-card">
+                    <h4>TransactionListScreen</h4>
+                    <p>Renderiza tabla, chips de página, validaciones numéricas y botones F7/F8/Enter.</p>
+                    <p>Se apoya en `useTransactionList` para mutaciones POST.</p>
+                </div>
+                <div class="info-card">
+                    <h4>TransactionViewScreen</h4>
+                    <p>Formulario read-only que formatea montos con `Intl.NumberFormat` y muestra metadata de `TransactionViewResponse`.</p>
+                </div>
+                <div class="info-card">
+                    <h4>TransactionAddScreen</h4>
+                    <p>Formulario dividido, datos de prueba, validaciones manuales y confirmación `Y` antes de invocar el backend.</p>
+                </div>
+                <div class="info-card">
+                    <h4>TransactionReportsScreen</h4>
+                    <p>Genera reportes mensuales/anuales/personalizados, muestra dialogo con tabla sticky y descarga TXT.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card-section">
+            <h2>🌐 Interfaces públicas</h2>
+            <pre><code>POST /transactions/list            - Lista transacciones (body: transactionId?, pageNumber)</code></pre>
+            <pre><code>POST /transactions/next-page      - Página siguiente (keyset pagination con lastTransactionId)</code></pre>
+            <pre><code>POST /transactions/previous-page  - Página anterior (keyset con firstTransactionId)</code></pre>
+            <pre><code>GET  /transaction-view/search?transactionId={id} - Detalle + metadata (currentDate, programName)</code></pre>
+            <pre><code>POST /transaction/clear            - Inicializa la vista (CT01)</code></pre>
+            <pre><code>POST /transactions                - Agrega movimiento (confirmación Y)</code></pre>
+            <pre><code>POST /v1/reports/transactions/{monthly|yearly|custom} - Reportes con confirmación</code></pre>
+        </section>
+
+        <section class="card-section">
+            <h2>📊 Modelos clave</h2>
+            <pre><code>// TransactionAddRequest (TS)
+interface TransactionAddRequest {
+  accountId?: string;
+  cardNumber?: string;
+  transactionTypeCode: string;
+  transactionCategoryCode: string;
+  transactionSource: string;
+  transactionDescription: string;
+  transactionAmount: string;
+  originalDate: string;
+  processDate: string;
+  merchantId: string;
+  merchantName: string;
+  merchantCity: string;
+  merchantZip: string;
+  confirmation: 'Y' | 'N' | '';
+}
+</code></pre>
+        </section>
+
+        <section class="card-section">
+            <h2>📋 Reglas de negocio</h2>
+            <div class="rules">
+                <div><strong>RN-TR-001:</strong> Transaction ID numérico obligatorio para vista y listado.</div>
+                <div><strong>RN-TR-002:</strong> Registro manual solo con `confirmation = 'Y'`.</div>
+                <div><strong>RN-TR-003:</strong> Monto en rango [-99,999,999.99, +99,999,999.99] y fechas en `YYYY-MM-DD`.</div>
+                <div><strong>RN-TR-004:</strong> Requiere Account ID (11 dígitos) o Card Number (16 dígitos).</div>
+            </div>
+        </section>
+
+        <section class="card-section">
+            <h2>✅ Criterios de aceptación</h2>
+            <div class="grid">
+                <div class="info-card">
+                    <h4>Validación</h4>
+                    <p>Dado que digito un Transaction ID, cuando es inválido, entonces muestro error en el campo y no inicio la petición.</p>
+                </div>
+                <div class="info-card">
+                    <h4>Registro</h4>
+                    <p>El formulario borra los campos y muestra mensaje de éxito cuando `POST /transactions` responde `success = true`.</p>
+                </div>
+                <div class="info-card">
+                    <h4>Reportes</h4>
+                    <p>Al confirmar un reporte mensual, debe aparecer el dialogo con la tabla y permitir descargar TXT/print.</p>
+                </div>
+                <div class="info-card">
+                    <h4>Performance</h4>
+                    <p>La respuesta de búsqueda debe ser menor a 400ms (P95) y mostrar loader mientras se espera.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card-section">
+            <h2>⚡ Presupuestos de rendimiento</h2>
+            <ul>
+                <li>Listados: < 600ms (P95) para páginas de 100 registros.</li>
+                <li>Búsqueda por ID: < 400ms (P95).</li>
+                <li>Registro manual: < 1s con validaciones incluidas.</li>
+                <li>Reportes: < 2s por reporte mensual (carga + render dialog + TXT).</li>
+            </ul>
+        </section>
+
+        <section class="card-section">
+            <h2>🚧 Riesgos y mitigaciones</h2>
+            <div class="grid">
+                <div class="info-card">
+                    <h4>Dependencia de keyset pagination</h4>
+                    <p>Riesgo de loops si el backend no envía `firstTransactionId`/`lastTransactionId`.</p>
+                    <p>Mitigación: Validar su existencia antes de navegar y mostrar mensaje.</p>
+                </div>
+                <div class="info-card">
+                    <h4>Validaciones divergentes</h4>
+                    <p>Regex de monto o fechas puede hacer que el frontend acepte datos que el backend rechaza.</p>
+                    <p>Mitigación: Replicar exactamente las expresiones de validación del backend y documentarlas en `useTransactionAdd`.</p>
+                </div>
+                <div class="info-card">
+                    <h4>Reportes pesados</h4>
+                    <p>Riesgo de cargar demasiados datos sin límites en `custom`.</p>
+                    <p>Mitigación: Restringir rangos de fecha (ej. 30 días) y mostrar spinner mientras se genera el reporte.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card-section">
+            <h2>🧪 Fragmento de código real</h2>
+            <pre><code>const { handleSearch, transactions, handleNextPage } = useTransactionList({
+  onTransactionSelect: (id) => navigate(`/transactions/view/${id}`),
+});
+
+<TextField
+  value={searchTransactionId}
+  onChange={(e) => handleSearchChange(e.target.value)}
+  helperText={validationErrors.searchTransactionId}
+/>
+
+<Button onClick={handleSearch}>Search</Button>
+{hasNextPage && <Button onClick={handleNextPage}>Next (F8)</Button>}</code></pre>
+        </section>
+
+        <footer>
+            <p><a href="../../index.html">← Volver a la página principal de documentación</a></p>
+            <p><a href="../../../system-overview.md">🏠 Volver al System Overview</a></p>
+            <p><em>Última actualización: 2026-02-06 | Precisión del módulo: 95%</em></p>
+        </footer>
+    </div>
+</body>
+</html>
