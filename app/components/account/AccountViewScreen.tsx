@@ -1,5 +1,6 @@
 // ===== app/components/account/AccountViewScreen.tsx =====
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Container,
   Box,
@@ -43,28 +44,37 @@ import {
 } from '@mui/icons-material';
 import { SystemHeader } from '~/components/layout/SystemHeader';
 import { LoadingSpinner } from '~/components/ui/LoadingSpinner';
-import type { AccountViewRequest, AccountViewResponse } from '~/types/account';
+import { useAccountView } from '~/hooks/useAccountView';
 
-interface AccountViewScreenProps {
-  onSearch: (request: AccountViewRequest) => void;
-  onExit?: () => void;
-  data?: AccountViewResponse | null;
-  loading?: boolean;
-  error?: string | null;
-}
-
-export function AccountViewScreen({
-  onSearch,
-  onExit,
-  data,
-  loading = false,
-  error,
-}: AccountViewScreenProps) {
+export function AccountViewScreen() {
+  const navigate = useNavigate();
+  const { data, loading, error, searchAccount, initializeScreen } = useAccountView();
   const theme = useTheme();
   const [accountId, setAccountId] = useState('');
   const [fieldError, setFieldError] = useState<string | null>(null);
   const [showSensitiveData, setShowSensitiveData] = useState(false);
   const [showTestAccounts, setShowTestAccounts] = useState(false);
+
+  useEffect(() => {
+    // Verificar autenticación
+    const userRole = localStorage.getItem('userRole');
+    if (!userRole) {
+      navigate('/login');
+      return;
+    }
+
+    // Inicializar pantalla
+    initializeScreen();
+  }, [navigate, initializeScreen]);
+
+  const handleExit = useCallback(() => {
+    const userRole = localStorage.getItem('userRole');
+    if (userRole === 'admin') {
+      navigate('/menu/admin');
+    } else {
+      navigate('/menu/main');
+    }
+  }, [navigate]);
 
   const testAccounts = [
     { id: '11111111111', desc: 'Active - John Smith - Premium', status: 'Active' },
@@ -94,22 +104,22 @@ export function AccountViewScreen({
       return;
     }
     
-    onSearch({ accountId });
-  }, [accountId, onSearch]);
+    searchAccount({ accountId });
+  }, [accountId, searchAccount]);
 
   const handleTestAccountSelect = useCallback((testAccountId: string) => {
     setAccountId(testAccountId);
     setFieldError(null);
-    onSearch({ accountId: testAccountId });
+    searchAccount({ accountId: testAccountId });
     setShowTestAccounts(false);
-  }, [onSearch]);
+  }, [searchAccount]);
 
   const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
     if (event.key === 'F3' || event.key === 'Escape') {
       event.preventDefault();
-      onExit?.();
+      handleExit();
     }
-  }, [onExit]);
+  }, [handleExit]);
 
   const formatCurrency = useCallback((amount?: number) => {
     if (amount === undefined || amount === null) return '';
@@ -746,7 +756,7 @@ export function AccountViewScreen({
                 variant="outlined"
                 size="small"
                 startIcon={<ExitToApp />}
-                onClick={onExit}
+                onClick={handleExit}
                 disabled={loading}
                 sx={{ borderRadius: 2 }}
               >

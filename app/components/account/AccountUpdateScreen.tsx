@@ -1,5 +1,6 @@
 // app/components/account/AccountUpdateScreen.tsx
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Container,
   Box,
@@ -48,31 +49,22 @@ import {
 } from '@mui/icons-material';
 import { SystemHeader } from '~/components/layout/SystemHeader';
 import { LoadingSpinner } from '~/components/ui/LoadingSpinner';
+import { useAccountUpdate } from '~/hooks/useAccountUpdate';
 import type { AccountUpdateRequest, AccountUpdateData } from '~/types/accountUpdate';
 
-interface AccountUpdateScreenProps {
-  onSearch: (request: AccountUpdateRequest) => void;
-  onUpdate: (data: AccountUpdateData) => void;
-  onExit?: () => void;
-  accountData?: AccountUpdateData | null;
-  hasChanges?: boolean;
-  loading?: boolean;
-  error?: string | null;
-  onDataChange?: (updates: Partial<AccountUpdateData>) => void;
-  onReset?: () => void;
-}
-
-export function AccountUpdateScreen({
-  onSearch,
-  onUpdate,
-  onExit,
-  accountData,
-  hasChanges = false,
-  loading = false,
-  error,
-  onDataChange,
-  onReset,
-}: AccountUpdateScreenProps) {
+export function AccountUpdateScreen() {
+  const navigate = useNavigate();
+  const {
+    accountData,
+    hasChanges,
+    searchAccount,
+    updateAccount,
+    updateLocalData,
+    resetForm,
+    clearData,
+    loading,
+    error,
+  } = useAccountUpdate();
   const theme = useTheme();
   const [accountId, setAccountId] = useState('');
   const [fieldError, setFieldError] = useState<string | null>(null);
@@ -81,6 +73,27 @@ export function AccountUpdateScreen({
 
   // Local validation states
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    // Verificar autenticación
+    const userRole = localStorage.getItem('userRole');
+    if (!userRole) {
+      navigate('/login');
+      return;
+    }
+
+    // Limpiar datos al montar
+    clearData();
+  }, [navigate, clearData]);
+
+  const handleExit = useCallback(() => {
+    const userRole = localStorage.getItem('userRole');
+    if (userRole === 'admin') {
+      navigate('/menu/admin');
+    } else {
+      navigate('/menu/main');
+    }
+  }, [navigate]);
 
   const handleAccountIdChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -103,12 +116,12 @@ export function AccountUpdateScreen({
     //   return;
     // }
     
-    onSearch({ accountId });
+    searchAccount({ accountId });
     setEditMode(false);
-  }, [accountId, onSearch]);
+  }, [accountId, searchAccount]);
 
   const handleFieldChange = useCallback((field: keyof AccountUpdateData, value: any) => {
-    if (!onDataChange || !accountData) return;
+    if (!updateLocalData || !accountData) return;
 
     // Basic local validation
     const errors = { ...validationErrors };
@@ -141,8 +154,8 @@ export function AccountUpdateScreen({
     }
 
     setValidationErrors(errors);
-    onDataChange({ [field]: value });
-  }, [onDataChange, accountData, validationErrors]);
+    updateLocalData({ [field]: value });
+  }, [updateLocalData, accountData, validationErrors]);
 
   const handleUpdate = useCallback(() => {
     if (!accountData || Object.keys(validationErrors).length > 0) return;
@@ -152,22 +165,22 @@ export function AccountUpdateScreen({
 
   const confirmUpdate = useCallback(() => {
     if (accountData) {
-      onUpdate(accountData);
+      updateAccount(accountData);
       setShowConfirmDialog(false);
       setEditMode(false);
     }
-  }, [accountData, onUpdate]);
+  }, [accountData, updateAccount]);
 
   const handleReset = useCallback(() => {
-    onReset?.();
+    resetForm();
     setValidationErrors({});
     setEditMode(false);
-  }, [onReset]);
+  }, [resetForm]);
 
   const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
     if (event.key === 'F3' || event.key === 'Escape') {
       event.preventDefault();
-      onExit?.();
+      handleExit();
     } else if (event.key === 'F5' && accountData && hasChanges) {
       event.preventDefault();
       handleUpdate();
@@ -175,7 +188,7 @@ export function AccountUpdateScreen({
       event.preventDefault();
       handleReset();
     }
-  }, [onExit, accountData, hasChanges, handleUpdate, handleReset]);
+  }, [handleExit, accountData, hasChanges, handleUpdate, handleReset]);
 
   const formatCurrency = useCallback((amount?: number) => {
     if (amount === undefined || amount === null) return '';
@@ -638,7 +651,7 @@ export function AccountUpdateScreen({
                 variant="outlined"
                 size="small"
                 startIcon={<ExitToApp />}
-                onClick={onExit}
+                onClick={handleExit}
                 disabled={loading}
                 sx={{ borderRadius: 2 }}
               >
