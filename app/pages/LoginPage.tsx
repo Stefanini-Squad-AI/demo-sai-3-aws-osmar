@@ -97,15 +97,15 @@ export default function LoginPage() {
     const errors: Record<string, string> = {};
     
     if (!formData.userId.trim()) {
-      errors.userId = 'Por favor ingrese su ID de usuario.';
+      errors.userId = 'Please enter your User ID.';
     } else if (formData.userId.length > 8) {
-      errors.userId = 'El ID de usuario debe tener 8 caracteres o menos.';
+      errors.userId = 'User ID must be 8 characters or less.';
     }
 
     if (!formData.password.trim()) {
-      errors.password = 'Por favor ingrese su contraseña.';
+      errors.password = 'Please enter your password.';
     } else if (formData.password.length > 8) {
-      errors.password = 'La contraseña debe tener 8 caracteres o menos.';
+      errors.password = 'Password must be 8 characters or less.';
     }
     
     setFieldErrors(errors);
@@ -150,7 +150,7 @@ export default function LoginPage() {
   const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
     if (event.key === 'F3' || event.key === 'Escape') {
       event.preventDefault();
-      if (window.confirm('¿Está seguro de que desea salir del sistema?')) {
+      if (window.confirm('Are you sure you want to exit the system?')) {
         window.close();
       }
     }
@@ -162,10 +162,10 @@ export default function LoginPage() {
 
   const getErrorMessage = (error: string) => {
     const errorMappings: Record<string, string> = {
-      'Invalid credentials': 'Credenciales incorrectas. Por favor intente nuevamente.',
-      'User not found': 'Usuario no encontrado. Por favor verifique su ID.',
-      'Please check your input': 'Por favor verifique su ID de usuario y contraseña.',
-      'Network error occurred': 'No se pueden verificar las credenciales. Verifique su conexión.',
+      'Invalid credentials': 'Invalid credentials. Please try again.',
+      'User not found': 'User not found. Please verify your ID.',
+      'Please check your input': 'Please check your User ID and password.',
+      'Network error occurred': 'Cannot verify credentials. Check your connection.',
     };
    
     return errorMappings[error] || error;
@@ -185,10 +185,10 @@ export default function LoginPage() {
       >
         <Box sx={{ textAlign: 'center' }}>
           <Typography variant="h5" gutterBottom>
-            Redirigiendo...
+            Redirecting...
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            Ya ha iniciado sesión. Redirigiendo a su panel de control.
+            Already signed in. Redirecting to your dashboard.
           </Typography>
         </Box>
       </Container>
@@ -218,7 +218,7 @@ export default function LoginPage() {
           zIndex: 10,
         }}
       >
-        <Tooltip title="Ver documentación" arrow>
+        <Tooltip title="View documentation" arrow>
           <IconButton
             onClick={handleOpenDocs}
             size="small"
@@ -348,7 +348,7 @@ export default function LoginPage() {
                   fontWeight: 600,
                 }}
               >
-                Iniciar Sesión
+                Sign In
               </Typography>
 
               <Typography
@@ -357,7 +357,7 @@ export default function LoginPage() {
                 textAlign="center"
                 sx={{ mb: { xs: 1.5, md: 2 } }}
               >
-                Ingrese su ID de usuario y contraseña, luego presione ENTER
+                Enter your User ID and password, then press ENTER
               </Typography>
 
               <Box
@@ -367,11 +367,11 @@ export default function LoginPage() {
               >
                 <Stack spacing={1.5}>
                   <TextField
-                    label="ID de Usuario"
+                    label="User ID"
                     value={formData.userId}
                     onChange={handleInputChange('userId')}
                     error={!!fieldErrors.userId}
-                    helperText={fieldErrors.userId || '(Máximo 8 caracteres)'}
+                    helperText={fieldErrors.userId || '(Maximum 8 characters)'}
                     disabled={isLoading}
                     autoFocus
                     fullWidth
@@ -394,12 +394,12 @@ export default function LoginPage() {
                   />
 
                   <TextField
-                    label="Contraseña"
+                    label="Password"
                     type={showPassword ? 'text' : 'password'}
                     value={formData.password}
                     onChange={handleInputChange('password')}
                     error={!!fieldErrors.password}
-                    helperText={fieldErrors.password || '(Máximo 8 caracteres)'}
+                    helperText={fieldErrors.password || '(Maximum 8 characters)'}
                     disabled={isLoading}
                     autoComplete="current-password"
                     fullWidth
@@ -447,7 +447,7 @@ export default function LoginPage() {
                           severity="error"
                           sx={{ borderRadius: 2 }}
                         >
-                          Por favor corrija los errores anteriores.
+                          Please correct the errors above.
                         </Alert>
                       )}
                     </>
@@ -481,7 +481,7 @@ export default function LoginPage() {
                       },
                     }}
                   >
-                    {isLoading ? 'Iniciando sesión...' : 'ENTER = Iniciar sesión'}
+                    {isLoading ? 'Signing in...' : 'ENTER = Sign In'}
                   </Button>
                 </Stack>
               </Box>
@@ -490,7 +490,7 @@ export default function LoginPage() {
 
               <Box sx={{ textAlign: 'center' }}>
                 <Typography variant="body2" color="text.secondary" gutterBottom sx={{ mb: 0.75 }}>
-                  Credenciales de ejemplo:
+                  Example credentials:
                 </Typography>
                 <Stack spacing={0.75}>
                   <Box sx={{ 
@@ -530,7 +530,7 @@ export default function LoginPage() {
               }}
             >
               <Typography variant="body2" color="text.secondary" fontWeight={500} sx={{ fontSize: { xs: '0.7rem', md: '0.8rem' } }}>
-                ENTER = Iniciar sesión • F3 = Salir
+                ENTER = Sign In • F3 = Exit
               </Typography>
             </Box>
           </Paper>
